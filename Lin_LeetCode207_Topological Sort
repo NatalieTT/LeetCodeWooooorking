@@ -1,0 +1,48 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+class node{
+    ArrayList<node> nodeList;
+    int inDegree;
+    public node(){
+        nodeList = new ArrayList<>();
+        inDegree = 0;
+    }
+}
+
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        node[] nodes = new node[numCourses];
+        for(int i = 0; i < nodes.length; i++){
+            nodes[i] = new node();
+        }
+
+        for(int i = 0; i < prerequisites.length; i++){
+            nodes[prerequisites[i][0]].nodeList.add(nodes[prerequisites[i][1]]);
+            nodes[prerequisites[i][1]].inDegree++;
+        }
+
+        LinkedList<node> linkedList = new LinkedList<>();
+        int count = 0;
+        for(int i = 0; i < nodes.length; i++){
+            if(nodes[i].inDegree == 0){
+                count++;
+                linkedList.offer(nodes[i]);
+            }
+        }
+
+        while(!linkedList.isEmpty()){
+            node node1 = linkedList.poll();
+            for(node node2 : node1.nodeList){
+                node2.inDegree--;
+                if(node2.inDegree == 0){
+                    count++;
+                    linkedList.offer(node2);
+                }
+            }
+        }
+
+        if(count != numCourses) return false;
+        else return true;
+    }
+}

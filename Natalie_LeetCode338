@@ -1,0 +1,18 @@
+class Solution {
+    public int[] countBits(int n) {
+        int[] ans = new int[n+1];
+        int count;
+        for(int i=0; i<n+1; i++){
+            //no need to change to binary, use >> it will automatically changed to binary
+            int bii=i;
+            count = 0;
+            while(bii > 0){
+                bii = bii&(bii-1);
+                count+=1;
+            }
+            ans[i] = count;
+            // ans[i] = ans[i >> 1] + (i & 1);
+        }
+        return ans;
+    }
+}

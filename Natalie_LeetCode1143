@@ -1,0 +1,52 @@
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        // int longer,shorter;
+        // String stext = "", ltext = "";
+        // if(text1.length()>text1.length()){
+        //     ltext = text1;
+        //     stext = text2;
+        //     longer = text1.length();
+        //     shorter = text2.length();
+        // } else {
+        //     ltext = text2;
+        //     stext = text1;
+        //     longer = text2.length();
+        //     shorter = text1.length();
+        // }
+        // int[] dp = new int[longer];
+        // Arrays.fill(dp,0);
+        // int rec = 0, smaller = 0;
+        // for(int i=0;i<longer;i++){
+        //     for(int j = smaller;j<shorter;j++){
+        //         if(stext.charAt(j)==ltext.charAt(i)){
+        //             dp[i]=dp[rec]+1;
+        //             rec = i;
+        //             smaller = j+1;
+        //         }
+        //     }
+        //     // i++;
+        // }
+        // Arrays.sort(dp);
+        // return dp[longer-1];
+        if(text1==null || text1.length()==0 || text2==null || text2.length()==0){
+            return 0;
+        }
+        
+        int n = text1.length(), m = text2.length();
+        int[][] dp = new int[n+1][m+1];
+        for(int i=1; i<=n; i++){
+            char t1 = text1.charAt(i-1);
+            for(int j=1; j<=m; j++){
+                char t2 = text2.charAt(j-1);
+                if(t1==t2){
+                    //1表示当前的字符占据一个长度
+                    dp[i][j] = 1 + dp[i-1][j-1];
+                }
+                else{
+                    dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+                }
+            }
+        }
+        return dp[n][m];
+    }
+}

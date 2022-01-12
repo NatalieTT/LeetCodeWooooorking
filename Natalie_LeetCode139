@@ -1,0 +1,33 @@
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        // String word = "";
+        // String used = "";
+        // for(int i = 0; i < s.length(); i ++){
+        //     word += s.charAt(i);
+        //     for(String w:wordDict){
+        //         if(word.equals(w)){
+        //             used += word;
+        //             word = "";
+        //         }
+        //     }
+        // }
+        // if(used.equals(s)){
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+        // // return Arrays.asList(wordDict).contains(s);
+        int len = s.length();
+        boolean[] dp = new boolean[len+1];
+        dp[0] = true;
+        for(int i = 0; i<len+1; i++){
+            for(int j = 0; j<i; j++){
+                if(dp[j] && wordDict.contains(s.substring(j,i))){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[len];
+    }
+}

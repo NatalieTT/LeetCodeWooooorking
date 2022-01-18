@@ -1,0 +1,51 @@
+class Solution {
+    public int numDecodings(String s) {
+//         if(s.startsWith("0")){
+//             return 0;
+//         }
+//         int lens = s.length();
+//         if(lens == 1){
+//             return 1;
+//         }
+//         // int test = 23;
+//         int[] dp = new int[lens];
+//         dp[0] = 1;
+//         if(Integer.valueOf(s.substring(0,2))>0){
+//         if(Integer.valueOf(s.substring(0,2))<=26 && Integer.valueOf(s.substring(0,2))>9){
+//             dp[1] = 2;
+//         }else{
+//             dp[1] = 1;
+//         }
+//         }
+//         for(int i = 2; i<lens; i++){
+//             int cur = Integer.valueOf(s.substring(i,i+1));
+//             if(cur > 0){
+//                 dp[i]=dp[i-1];
+//             }
+//             int sub = Integer.valueOf(s.substring(i-1,i+1));
+//             // test = sub;
+//             if(sub <= 26 && sub>9){
+//                 dp[i]+=dp[i-2];
+                
+//             }
+//         }
+//         return dp[lens-1];
+//         // return test;
+        if (s == null || s.length() == 0) {
+           return 0;
+       }
+       int[] nums = new int[s.length() + 1];
+       nums[0] = 1;
+       nums[1] = s.charAt(0) != '0' ? 1 : 0;
+       for (int i = 2; i <= s.length(); i++) {
+           if(s.charAt(i-1) != '0') {
+               nums[i] = nums[i-1];
+           }
+           int twoDigits = (s.charAt(i - 2) - '0') * 10 + s.charAt(i - 1) - '0';
+           if (twoDigits >= 10 && twoDigits <= 26) {
+               nums[i] += nums[i - 2] ;
+           }
+       }
+       return nums[s.length()] ;
+    }
+}
